@@ -19,24 +19,24 @@ server.on('connection', connection => {
     const strData = data.toString()
 
     // Lida com requisições http GET
-    if (strData.startsWith('GET')) {
+    if (strData.startsWith('GET') || strData.startsWith('POST')) {
       httpRequestHandler(data, connection)
       return
     }
+    else {
+      ptmpRequestHandler(data, connection)
 
-    ptmpRequestHandler(data, connection)
-
-    if (strData === 'end') {
-      connection.end(() => {
-        console.log('Cliente solicitou desconexão. ')
-      })
-      return
+      if (strData === 'end') {
+        connection.end(() => {
+          console.log('Cliente solicitou desconexão. ')
+        })
+        return
+      }
     }
   })
 
   connection.on('end', () => {
-    clients.
-      console.log('Alguem se desconectou!')
+    console.log('Alguem se desconectou!')
   })
 })
 
